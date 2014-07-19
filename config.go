@@ -13,7 +13,11 @@ func Parse(path string, config interface{}) error {
 		return err
 	}
 
-	setDefaultValue(config)
+	err = setDefaultValue(config)
+	if err != nil {
+		return err
+	}
+
 	decoder := json.NewDecoder(file)
 	err = decoder.Decode(config)
 	if err != nil {
@@ -23,6 +27,6 @@ func Parse(path string, config interface{}) error {
 	return nil
 }
 
-func setDefaultValue(config interface{}) {
-	setDefaultValueToStruct(reflect.TypeOf(config), reflect.ValueOf(config))
+func setDefaultValue(config interface{}) error {
+	return setDefaultValueToStruct(reflect.TypeOf(config), reflect.ValueOf(config))
 }

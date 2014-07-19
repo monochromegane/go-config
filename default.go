@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func setDefaultValueToStruct(t reflect.Type, v reflect.Value) {
+func setDefaultValueToStruct(t reflect.Type, v reflect.Value) error {
 
 	var te reflect.Type
 	if isPtrTypeOfStruct(t) {
@@ -29,21 +29,34 @@ func setDefaultValueToStruct(t reflect.Type, v reflect.Value) {
 		case reflect.String:
 			value.SetString(def)
 		case reflect.Bool:
-			bv, _ := strconv.ParseBool(def)
+			bv, err := strconv.ParseBool(def)
+			if err != nil {
+				return err
+			}
 			value.SetBool(bv)
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			iv, _ := strconv.ParseInt(def, 0, f.Type.Bits())
+			iv, err := strconv.ParseInt(def, 0, f.Type.Bits())
+			if err != nil {
+				return err
+			}
 			value.SetInt(iv)
 		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			uv, _ := strconv.ParseUint(def, 0, f.Type.Bits())
+			uv, err := strconv.ParseUint(def, 0, f.Type.Bits())
+			if err != nil {
+				return err
+			}
 			value.SetUint(uv)
 		case reflect.Float32, reflect.Float64:
-			fv, _ := strconv.ParseFloat(def, f.Type.Bits())
+			fv, err := strconv.ParseFloat(def, f.Type.Bits())
+			if err != nil {
+				return err
+			}
 			value.SetFloat(fv)
 		case reflect.Struct:
-			setDefaultValueToStruct(f.Type, value)
+			return setDefaultValueToStruct(f.Type, value)
 		}
 	}
+	return nil
 }
 
 func isPtrTypeOfStruct(t reflect.Type) bool {
