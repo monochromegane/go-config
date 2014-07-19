@@ -22,6 +22,7 @@ func TestParse(t *testing.T) {
 func TestSetDefalutValue(t *testing.T) {
 
 	var conf = struct {
+		Bool   bool   `default:"true"`
 		String string `default:"default"`
 		Int    int    `default:"10"`
 		Int8   int8   `default:"20"`
@@ -32,6 +33,9 @@ func TestSetDefalutValue(t *testing.T) {
 
 	setDefaultValue(&conf)
 
+	if !conf.Bool {
+		t.Errorf("Expected String value to be true")
+	}
 	if conf.String != "default" {
 		t.Errorf("Expected String value 'defalut', but %s.", conf.String)
 	}
