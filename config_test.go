@@ -29,6 +29,11 @@ func TestSetDefalutValue(t *testing.T) {
 		Int16  int16  `default:"30"`
 		Int32  int32  `default:"40"`
 		Int64  int64  `default:"50"`
+		Uint   uint   `default:"10"`
+		Uint8  uint8  `default:"20"`
+		Uint16 uint16 `default:"30"`
+		Uint32 uint32 `default:"40"`
+		Uint64 uint64 `default:"50"`
 	}{}
 
 	setDefaultValue(&conf)
@@ -53,6 +58,21 @@ func TestSetDefalutValue(t *testing.T) {
 	}
 	if conf.Int64 != 50 {
 		t.Errorf("Expected Int64 value 50, but %d.", conf.Int64)
+	}
+	if conf.Uint != 10 {
+		t.Errorf("Expected Uint value 10, but %d.", conf.Uint)
+	}
+	if conf.Uint8 != 20 {
+		t.Errorf("Expected Uint8 value 20, but %d.", conf.Uint8)
+	}
+	if conf.Uint16 != 30 {
+		t.Errorf("Expected Uint16 value 30, but %d.", conf.Uint16)
+	}
+	if conf.Uint32 != 40 {
+		t.Errorf("Expected Uint32 value 40, but %d.", conf.Uint32)
+	}
+	if conf.Uint64 != 50 {
+		t.Errorf("Expected Uint64 value 50, but %d.", conf.Uint64)
 	}
 
 }

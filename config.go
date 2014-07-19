@@ -39,6 +39,9 @@ func setDefaultValue(config interface{}) {
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 			iv, _ := strconv.ParseInt(def, 0, f.Type.Bits())
 			value.SetInt(iv)
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			uv, _ := strconv.ParseUint(def, 0, f.Type.Bits())
+			value.SetUint(uv)
 		case reflect.String:
 			value.SetString(def)
 		}
