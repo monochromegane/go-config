@@ -33,9 +33,9 @@ func setDefaultValue(config interface{}) {
 		def := f.Tag.Get("default")
 		value := v.Elem().FieldByName(f.Name)
 		switch f.Type.Kind() {
-		case reflect.Int:
-			iv, _ := strconv.Atoi(def)
-			value.SetInt(int64(iv))
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			iv, _ := strconv.ParseInt(def, 0, f.Type.Bits())
+			value.SetInt(iv)
 		case reflect.String:
 			value.SetString(def)
 		}
