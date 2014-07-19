@@ -22,18 +22,20 @@ func TestParse(t *testing.T) {
 func TestSetDefalutValue(t *testing.T) {
 
 	var conf = struct {
-		Bool   bool   `default:"true"`
-		String string `default:"default"`
-		Int    int    `default:"10"`
-		Int8   int8   `default:"20"`
-		Int16  int16  `default:"30"`
-		Int32  int32  `default:"40"`
-		Int64  int64  `default:"50"`
-		Uint   uint   `default:"10"`
-		Uint8  uint8  `default:"20"`
-		Uint16 uint16 `default:"30"`
-		Uint32 uint32 `default:"40"`
-		Uint64 uint64 `default:"50"`
+		Bool    bool    `default:"true"`
+		String  string  `default:"default"`
+		Int     int     `default:"10"`
+		Int8    int8    `default:"20"`
+		Int16   int16   `default:"30"`
+		Int32   int32   `default:"40"`
+		Int64   int64   `default:"50"`
+		Uint    uint    `default:"10"`
+		Uint8   uint8   `default:"20"`
+		Uint16  uint16  `default:"30"`
+		Uint32  uint32  `default:"40"`
+		Uint64  uint64  `default:"50"`
+		Float32 float32 `default:"10.1"`
+		Float64 float64 `default:"20.2"`
 	}{}
 
 	setDefaultValue(&conf)
@@ -73,6 +75,12 @@ func TestSetDefalutValue(t *testing.T) {
 	}
 	if conf.Uint64 != 50 {
 		t.Errorf("Expected Uint64 value 50, but %d.", conf.Uint64)
+	}
+	if conf.Float32 != 10.1 {
+		t.Errorf("Expected Float32 value 10.1, but %d.", conf.Float32)
+	}
+	if conf.Float64 != 20.2 {
+		t.Errorf("Expected Float64 value 20.2, but %d.", conf.Float64)
 	}
 
 }

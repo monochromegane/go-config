@@ -42,6 +42,9 @@ func setDefaultValue(config interface{}) {
 		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 			uv, _ := strconv.ParseUint(def, 0, f.Type.Bits())
 			value.SetUint(uv)
+		case reflect.Float32, reflect.Float64:
+			fv, _ := strconv.ParseFloat(def, f.Type.Bits())
+			value.SetFloat(fv)
 		case reflect.String:
 			value.SetString(def)
 		}
