@@ -67,6 +67,17 @@ func TestDefaultValueToBasicType(t *testing.T) {
 	}
 }
 
+func TestNotDefineDefaultValue(t *testing.T) {
+	var conf = struct {
+		NoDefault int
+	}{}
+	setDefaultValue(&conf)
+
+	if conf.NoDefault != 0 {
+		t.Errorf("Expected NoDefault value 0, but %d.", conf.NoDefault)
+	}
+}
+
 func TestDefaultValueToStruct(t *testing.T) {
 	var conf = struct {
 		Sub struct {

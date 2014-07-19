@@ -25,6 +25,15 @@ func setDefaultValueToStruct(t reflect.Type, v reflect.Value) error {
 		f := te.FieldByIndex([]int{i})
 		def := f.Tag.Get("default")
 		value := ve.FieldByName(f.Name)
+
+		if f.Type.Kind() == reflect.Struct {
+			return setDefaultValueToStruct(f.Type, value)
+		}
+
+		if def == "" {
+			continue
+		}
+
 		switch f.Type.Kind() {
 		case reflect.String:
 			value.SetString(def)
@@ -52,8 +61,6 @@ func setDefaultValueToStruct(t reflect.Type, v reflect.Value) error {
 				return err
 			}
 			value.SetFloat(fv)
-		case reflect.Struct:
-			return setDefaultValueToStruct(f.Type, value)
 		}
 	}
 	return nil
