@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"os"
 	"reflect"
-	"strconv"
 )
 
 func Parse(path string, config interface{}) error {
@@ -25,28 +24,5 @@ func Parse(path string, config interface{}) error {
 }
 
 func setDefaultValue(config interface{}) {
-
-	v := reflect.ValueOf(config)
-	t := reflect.TypeOf(config)
-	for i := 0; i < t.Elem().NumField(); i++ {
-		f := t.Elem().FieldByIndex([]int{i})
-		def := f.Tag.Get("default")
-		value := v.Elem().FieldByName(f.Name)
-		switch f.Type.Kind() {
-		case reflect.Bool:
-			bv, _ := strconv.ParseBool(def)
-			value.SetBool(bv)
-		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			iv, _ := strconv.ParseInt(def, 0, f.Type.Bits())
-			value.SetInt(iv)
-		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			uv, _ := strconv.ParseUint(def, 0, f.Type.Bits())
-			value.SetUint(uv)
-		case reflect.Float32, reflect.Float64:
-			fv, _ := strconv.ParseFloat(def, f.Type.Bits())
-			value.SetFloat(fv)
-		case reflect.String:
-			value.SetString(def)
-		}
-	}
+	setDefaultValueToStruct(reflect.TypeOf(config), reflect.ValueOf(config))
 }
